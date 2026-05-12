@@ -1,0 +1,26 @@
+{
+  "name": "@swarm/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./redaction": "./src/redaction.ts",
+    "./events": "./src/events.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "lint": "echo 'lint stub — wire eslint in CI ADR'",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

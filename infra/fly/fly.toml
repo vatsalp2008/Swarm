@@ -1,0 +1,45 @@
+# Fly.io app config for the SWARM orchestrator.
+# Deploy with: `fly deploy --config infra/fly/fly.toml --dockerfile apps/orchestrator/Dockerfile .`
+
+app = "swarm-orchestrator"
+primary_region = "ewr"  # change to your nearest free-tier region
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+  LISTEN_CHANNEL = "swarm_tasks"
+  LOG_LEVEL = "info"
+
+# Free-tier sized; adjust if memory pressure shows up under load (see ADR-0002).
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  auto_stop_machines = "off"   # orchestrator must stay up to receive LISTEN/NOTIFY
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[services.tcp_checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+
+  [[services.http_checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/health"
+    protocol = "http"
+
+# Secrets (set via `fly secrets set`):
+#   DATABASE_URL          - Postgres direct (port 5432) — required for LISTEN/NOTIFY
+#   GEMINI_API_KEY        - Google AI Studio
+#   LANGSMITH_API_KEY     - LangSmith Developer tier
+#   LANGSMITH_PROJECT     - e.g. swarm-prod

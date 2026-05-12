@@ -1,0 +1,31 @@
+{
+  "name": "swarm",
+  "version": "0.0.0",
+  "private": true,
+  "description": "SWARM — multi-agent platform for asynchronous, authentication-aware delegated tasks.",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json,yml,yaml}\"",
+    "db:generate": "pnpm --filter @swarm/db generate",
+    "db:migrate": "pnpm --filter @swarm/db migrate",
+    "db:studio": "pnpm --filter @swarm/db studio",
+    "verify:audit": "pnpm --filter @swarm/audit verify"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "prettier": "^3.4.0",
+    "tsx": "^4.19.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.7.0"
+  }
+}
