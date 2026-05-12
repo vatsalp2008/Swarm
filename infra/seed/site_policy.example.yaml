@@ -1,0 +1,45 @@
+# site_policy seed (committed example).
+#
+# To use:
+#   1. Copy this file to `site_policy.local.yaml` (gitignored).
+#   2. Add hosts specific to the founder's home institution under `deny:`
+#      with a clear reason. This file is the "private deploy config"
+#      referenced in ADR-0004.
+#   3. Run `pnpm --filter @swarm/db seed` to populate the site_policy table.
+#
+# Schema:
+#   <status>:
+#     - host:   <fqdn>
+#       reason: <human-readable rationale>
+#
+# Statuses: allow | deny | negotiated (matches site_policy_status enum).
+#
+# Default behavior: the Compliance Agent treats any host NOT in this file as
+# `deny` (default-deny per ADR-0004).
+
+allow:
+  - host: wellfound.com
+    reason: Public job board; ToS permits read-only automation under user delegation.
+  - host: www.wellfound.com
+    reason: Same as wellfound.com (www subdomain).
+  - host: workatastartup.com
+    reason: YC public job listings.
+  - host: www.workatastartup.com
+    reason: Same as workatastartup.com.
+  - host: api.indeed.com
+    reason: Indeed Job Search public API. Subject to API ToS, not scraping.
+
+deny:
+  - host: joinhandshake.com
+    reason: ToS explicitly prohibits automation. Permanent deny (ADR-0004).
+  - host: app.joinhandshake.com
+    reason: Same as joinhandshake.com.
+  - host: linkedin.com
+    reason: Aggressive enforcement of anti-automation ToS; risk of legal action. Permanent deny (ADR-0004).
+  - host: www.linkedin.com
+    reason: Same as linkedin.com.
+  # NOTE: Founder's home-institution hosts (SSO, LMS, SIS, career-services
+  # portal, webmail, ID systems) must be added in `site_policy.local.yaml`,
+  # not here. See ADR-0004.
+
+negotiated: []

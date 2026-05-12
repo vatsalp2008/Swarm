@@ -1,0 +1,4 @@
+# Local-only deploy config — host enumeration that identifies the founder's
+# home institution lives here per ADR-0004. Never committed.
+*.local.yaml
+*.local.yml
